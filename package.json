@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.1.10",
     "antd": "^4.15.6",
     "axios": "^0.21.1",
+    "node-sass": "^6.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
@@ -15,7 +16,8 @@
     "react-saga": "^0.3.1",
     "react-scripts": "4.0.3",
     "redux": "^4.1.0",
-    "styled-component": "^2.8.0",
+    "redux-thunk": "^2.3.0",
+    "sass-loader": "^11.1.1",
     "tailwindcss": "^2.1.2",
     "web-vitals": "^1.0.1"
   },
