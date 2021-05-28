@@ -18,11 +18,12 @@ export default function Login(props) {
             userLogin.password === "helloReact"
         ) {
             // if success go back to last page
-            // props.history.goBack();
+            props.history.goBack();
+            localStorage.setItem("userLogin", JSON.stringify(userLogin));
             // Or go to a specific page
             // props.history.push("/home");
             // Or replace the current page with a replacement page
-            props.history.replace("/contact");
+            // props.history.replace("/contact");
         } else {
             alert("Login fail!");
             return;

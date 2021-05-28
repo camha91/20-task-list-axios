@@ -60,6 +60,16 @@ export default function Header() {
                                 Login
                             </NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink
+                                activeClassName="activeNavItem"
+                                activeStyle={{ fontWeight: "bold" }}
+                                className="nav-link"
+                                to="/profile"
+                            >
+                                Profile
+                            </NavLink>
+                        </li>
                     </ul>
                     <form className="form-inline my-2 my-lg-0">
                         <input
