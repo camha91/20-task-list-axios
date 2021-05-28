@@ -1,14 +1,37 @@
 import React, { useState } from "react";
+import { Prompt } from "react-router";
 
 export default function Login(props) {
-    const [userLogin, setUserLogin] = useState({ userName: "", password: "" });
+    const [userLogin, setUserLogin] = useState({
+        userName: "",
+        password: "",
+        status: false,
+    });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setUserLogin({
+
+        const newUserLogin = {
             ...userLogin,
             [name]: value,
-        });
+        };
+
+        let valid = true;
+
+        for (let key in newUserLogin) {
+            if (key !== "status") {
+                if (newUserLogin[key].trim() === "") {
+                    valid = false;
+                }
+            }
+        }
+
+        if (valid) {
+            newUserLogin.status = true;
+        } else {
+            newUserLogin.status = false;
+        }
+        setUserLogin(newUserLogin);
     };
 
     const handleLogin = (e) => {
@@ -51,6 +74,12 @@ export default function Login(props) {
             <div className="form-group">
                 <button className="btn btn-success">Login</button>
             </div>
+            <Prompt
+                when={userLogin.status}
+                message={(location) => {
+                    return "Are you sure you want to leave this page?";
+                }}
+            />
         </form>
     );
 }
