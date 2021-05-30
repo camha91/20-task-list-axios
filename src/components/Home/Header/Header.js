@@ -70,6 +70,35 @@ export default function Header() {
                                 Profile
                             </NavLink>
                         </li>
+                        <li className="nav-item dropdown">
+                            <a
+                                className="nav-link dropdown-toggle"
+                                href="/taskListRcc"
+                                id="dropdownId"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                            >
+                                Task List
+                            </a>
+                            <div
+                                className="dropdown-menu"
+                                aria-labelledby="dropdownId"
+                            >
+                                <NavLink
+                                    className="dropdown-item"
+                                    to="/taskListRcc"
+                                >
+                                    Task List Class
+                                </NavLink>
+                                <NavLink
+                                    className="dropdown-item"
+                                    to="/taskListRfc"
+                                >
+                                    Task List Functional
+                                </NavLink>
+                            </div>
+                        </li>
                     </ul>
                     <form className="form-inline my-2 my-lg-0">
                         <input
