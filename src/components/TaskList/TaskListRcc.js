@@ -41,10 +41,22 @@ export default class TaskListRcc extends Component {
                     <li key={index}>
                         <span>{item.taskName}</span>
                         <div className="buttons">
-                            <button className="remove">
+                            <button
+                                type="button"
+                                className="remove"
+                                onClick={() => {
+                                    this.delTask(item.taskName);
+                                }}
+                            >
                                 <i className="fa fa-trash-alt" />
                             </button>
-                            <button className="complete">
+                            <button
+                                type="button"
+                                className="complete"
+                                onClick={() => {
+                                    this.completeTask(item.taskName);
+                                }}
+                            >
                                 <i className="far fa-check-circle" />
                                 <i className="fas fa-check-circle" />
                             </button>
@@ -62,12 +74,24 @@ export default class TaskListRcc extends Component {
                     <li key={index}>
                         <span>{item.taskName}</span>
                         <div className="buttons">
-                            <button className="remove">
+                            <button
+                                type="button"
+                                className="remove"
+                                onClick={() => {
+                                    this.delTask(item.taskName);
+                                }}
+                            >
                                 <i className="fa fa-trash-alt" />
                             </button>
-                            <button className="complete">
-                                <i className="far fa-check-circle" />
-                                <i className="fas fa-check-circle" />
+                            <button
+                                type="button"
+                                className="complete"
+                                onClick={() => {
+                                    this.rejectTask(item.taskName);
+                                }}
+                            >
+                                <i className="far fa-undo" />
+                                <i className="fas fa-undo" />
                             </button>
                         </div>
                     </li>
@@ -75,10 +99,62 @@ export default class TaskListRcc extends Component {
             });
     };
 
+    // Complete a task
+    completeTask = (taskName) => {
+        const promise = Axios({
+            url: `http://svcy.myclass.vn/api/ToDoList/doneTask?taskName=${taskName}`,
+            method: "PUT",
+        });
+
+        promise.then((result) => {
+            alert(result.data);
+            this.getTaskList();
+        });
+
+        promise.catch((error) => {
+            alert(error.response.data);
+        });
+    };
+
+    // Reject a task
+    rejectTask = (taskName) => {
+        const promise = Axios({
+            url: `http://svcy.myclass.vn/api/ToDoList/rejectTask?taskName=${taskName}`,
+            method: "PUT",
+        });
+
+        promise.then((result) => {
+            alert(result.data);
+            this.getTaskList();
+        });
+
+        promise.catch((error) => {
+            alert(error.response.data);
+        });
+    };
+
+    // Delete a task
+    delTask = (taskName) => {
+        const promise = Axios({
+            url: `http://svcy.myclass.vn/api/ToDoList/deleteTask?taskName=${taskName}`,
+            method: "DELETE",
+        });
+
+        promise.then((result) => {
+            alert(result.data);
+            this.getTaskList();
+        });
+
+        promise.catch((error) => {
+            alert(error.response.data);
+        });
+    };
+
     componentDidMount = () => {
         this.getTaskList();
     };
 
+    // Add a task
     addTask = (e) => {
         e.preventDefault();
 
