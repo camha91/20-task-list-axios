@@ -1,5 +1,5 @@
-import React, { Component } from "react";
 import Axios from "axios";
+import React, { Component } from "react";
 import "./TaskList.css";
 
 export default class TaskListRcc extends Component {
@@ -196,55 +196,61 @@ export default class TaskListRcc extends Component {
         });
     };
 
+    handleSubmit = (e) => {
+        e.preventDefault();
+    };
+
     componentDidMount = () => {
         this.getTaskList();
     };
 
     render() {
         return (
-            <form onSubmit={() => {}}>
-                <div className="card">
-                    <div className="card__header">
-                        <img src="./img/X2oObC4.png" alt="background pic" />
-                    </div>
-                    {/* <h2>hello!</h2> */}
-                    <div className="card__body">
-                        <div className="card__content">
-                            <div className="card__title">
-                                <h2>My Tasks</h2>
-                                <p>May 29,2021</p>
+            <div className="card">
+                <div className="card__header">
+                    <img src="./img/X2oObC4.png" alt="background pic" />
+                </div>
+                {/* <h2>hello!</h2> */}
+                <form className="card__body" onSubmit={this.handleSubmit}>
+                    <div className="card__content">
+                        <div className="card__title">
+                            <h2>My Tasks</h2>
+                            <p>May 29,2021</p>
+                        </div>
+                        <div className="form-group">
+                            <div className="card__add">
+                                <input
+                                    onChange={this.handleChange}
+                                    name="taskName"
+                                    id="newTask"
+                                    type="text"
+                                    placeholder="Enter an activity..."
+                                />
+                                <button
+                                    id="addItem"
+                                    type="submit"
+                                    onClick={this.addTask}
+                                >
+                                    <i className="fa fa-plus" />
+                                </button>
                             </div>
-                            <div className="form-group">
-                                <div className="card__add">
-                                    <input
-                                        onChange={this.handleChange}
-                                        name="taskName"
-                                        id="newTask"
-                                        type="text"
-                                        placeholder="Enter an activity..."
-                                    />
-                                    <button id="addItem" onClick={this.addTask}>
-                                        <i className="fa fa-plus" />
-                                    </button>
-                                </div>
-                                <p className="text text-danger">
-                                    {this.state.errors.taskName}
-                                </p>
-                            </div>
-                            <div className="card__todo">
-                                {/* Uncompleted tasks */}
-                                <ul className="todo" id="todo">
-                                    {this.renderTaskTodo()}
-                                </ul>
-                                {/* Completed tasks */}
-                                <ul className="todo" id="completed">
-                                    {this.renderTaskCompleted()}
-                                </ul>
-                            </div>
+                            <p className="text text-danger">
+                                {this.state.errors.taskName}
+                            </p>
+                        </div>
+                        <div className="card__todo">
+                            {/* Uncompleted tasks */}
+                            <ul className="todo" id="todo">
+                                {this.renderTaskTodo()}
+                            </ul>
+                            {/* Completed tasks */}
+                            <ul className="todo" id="completed">
+                                {this.renderTaskCompleted()}
+                            </ul>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         );
     }
 }

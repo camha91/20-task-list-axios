@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import "./TaskList.css";
 import Axios from "axios";
+import React, { useEffect, useState } from "react";
+import "./TaskList.css";
 
 export default function TaskListRfc(props) {
     const [state, setState] = useState({
@@ -13,28 +13,8 @@ export default function TaskListRfc(props) {
         },
     });
 
-    const getTaskList = () => {
-        const promise = Axios({
-            url: "http://svcy.myclass.vn/api/ToDoList/GetAllTask",
-            method: "GET",
-        });
-
-        promise.then((result) => {
-            console.log(result.data);
-            // if successful calling API, set state
-            setState({ taskList: result.data });
-
-            console.log("successful");
-        });
-
-        promise.catch((err) => {
-            console.log("Fail");
-            console.log(err.response.data);
-        });
-    };
-
     const renderTaskTodo = () => {
-        console.log(state.taskList);
+        console.log("Rfc taskList: ", state.taskList);
         return state.taskList
             .filter((item) => !item.status)
             .map((item, index) => {
@@ -102,12 +82,15 @@ export default function TaskListRfc(props) {
 
     const handleChange = (e) => {
         const { value, name } = e.target;
+        console.log(value, name);
 
-        const newValues = { ...state.values, [name]: value };
+        let newValues = { ...state.values };
 
-        const newErrors = { ...state.errors };
+        newValues = { ...newValues, [name]: value };
 
         const regexString = /^[a-z A-Z]+$/;
+
+        const newErrors = { ...state.errors };
 
         if (!regexString.test(value) || value.trim() === "") {
             newErrors[name] = name + " invalid!";
@@ -116,8 +99,32 @@ export default function TaskListRfc(props) {
         }
 
         setState({
+            ...state,
             values: newValues,
             errors: newErrors,
+        });
+    };
+
+    const getTaskList = () => {
+        const promise = Axios({
+            url: "http://svcy.myclass.vn/api/ToDoList/GetAllTask",
+            method: "GET",
+        });
+
+        promise.then((result) => {
+            console.log(result.data);
+            // if successful calling API, set state
+            setState({
+                ...state,
+                taskList: result.data,
+            });
+
+            console.log("successful");
+        });
+
+        promise.catch((err) => {
+            console.log("Fail");
+            console.log(err.response.data);
         });
     };
 
@@ -206,47 +213,51 @@ export default function TaskListRfc(props) {
     }, []);
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div className="card">
-                <div className="card__header">
-                    <img src="./img/X2oObC4.png" alt="background pic" />
-                </div>
-                {/* <h2>hello!</h2> */}
-                <div className="card__body">
-                    <div className="card__content">
-                        <div className="card__title">
-                            <h2>My Tasks</h2>
-                            <p>May 29,2021</p>
+        <div className="card">
+            <div className="card__header">
+                <img src="./img/X2oObC4.png" alt="background pic" />
+            </div>
+            {/* <h2>hello!</h2> */}
+            <form className="card__body" onSubmit={handleSubmit}>
+                <div className="card__content">
+                    <div className="card__title">
+                        <h2>My Tasks</h2>
+                        <p>May 29,2021</p>
+                    </div>
+                    <div className="form-group">
+                        <div className="card__add">
+                            <input
+                                onChange={handleChange}
+                                name="taskName"
+                                id="newTask"
+                                type="text"
+                                placeholder="Enter an activity..."
+                            />
+                            <button
+                                id="addItem"
+                                type="submit"
+                                onClick={addTask}
+                            >
+                                <i className="fa fa-plus" />
+                            </button>
                         </div>
-                        <div className="form-group">
-                            <div className="card__add">
-                                <input
-                                    onChange={handleChange}
-                                    name="taskName"
-                                    id="newTask"
-                                    type="text"
-                                    placeholder="Enter an activity..."
-                                />
-                                <button id="addItem" onClick={addTask}>
-                                    <i className="fa fa-plus" />
-                                </button>
-                            </div>
-                            {/* <p>{state.errors.taskName}</p> */}
-                        </div>
+                        <p className="text text-danger">
+                            {state.errors.taskName}
+                        </p>
+                    </div>
 
-                        <div className="card__todo">
-                            {/* Uncompleted tasks */}
-                            <ul className="todo" id="todo">
-                                {renderTaskTodo()}
-                            </ul>
-                            {/* Completed tasks */}
-                            <ul className="todo" id="completed">
-                                {renderTaskCompleted()}
-                            </ul>
-                        </div>
+                    <div className="card__todo">
+                        {/* Uncompleted tasks */}
+                        <ul className="todo" id="todo">
+                            {renderTaskTodo()}
+                        </ul>
+                        {/* Completed tasks */}
+                        <ul className="todo" id="completed">
+                            {renderTaskCompleted()}
+                        </ul>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     );
 }

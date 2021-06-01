@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
-import { getTaskApiAction } from "../../redux/actions/TaskListActions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    addTaskAction,
+    completeTaskAction,
+    delTaskAction,
+    getTaskApiAction,
+    rejectTaskAction,
+} from "../../redux/actions/TaskListActions";
 
 export default function TaskListRedux(props) {
-    const taskList = useSelector((state) => state.TaskListReducer.taskList);
-    console.log(taskList);
+    const { taskList } = useSelector((state) => state.TaskListReducer);
+    console.log("Redux taskList: ", taskList);
 
     const [state, setState] = useState({
         values: {
@@ -21,11 +26,6 @@ export default function TaskListRedux(props) {
     const getTaskList = () => {
         dispatch(getTaskApiAction());
     };
-
-    useEffect(() => {
-        getTaskList();
-        return () => {};
-    }, []);
 
     const renderTaskTodo = () => {
         return taskList
@@ -110,6 +110,7 @@ export default function TaskListRedux(props) {
         }
 
         setState({
+            ...state,
             values: newValues,
             errors: newErrors,
         });
@@ -117,53 +118,17 @@ export default function TaskListRedux(props) {
 
     // Complete a task
     const completeTask = (taskName) => {
-        const promise = Axios({
-            url: `http://svcy.myclass.vn/api/ToDoList/doneTask?taskName=${taskName}`,
-            method: "PUT",
-        });
-
-        promise.then((result) => {
-            alert(result.data);
-            getTaskList();
-        });
-
-        promise.catch((error) => {
-            alert(error.response.data);
-        });
+        dispatch(completeTaskAction(taskName));
     };
 
     // Reject a task
     const rejectTask = (taskName) => {
-        const promise = Axios({
-            url: `http://svcy.myclass.vn/api/ToDoList/rejectTask?taskName=${taskName}`,
-            method: "PUT",
-        });
-
-        promise.then((result) => {
-            alert(result.data);
-            getTaskList();
-        });
-
-        promise.catch((error) => {
-            alert(error.response.data);
-        });
+        dispatch(rejectTaskAction(taskName));
     };
 
     // Delete a task
     const delTask = (taskName) => {
-        const promise = Axios({
-            url: `http://svcy.myclass.vn/api/ToDoList/deleteTask?taskName=${taskName}`,
-            method: "DELETE",
-        });
-
-        promise.then((result) => {
-            alert(result.data);
-            getTaskList();
-        });
-
-        promise.catch((error) => {
-            alert(error.response.data);
-        });
+        dispatch(delTaskAction(taskName));
     };
 
     // Add a task
@@ -172,61 +137,54 @@ export default function TaskListRedux(props) {
 
         console.log("addTask value: ", state.values.taskName);
 
-        const promise = Axios({
-            url: "http://svcy.myclass.vn/api/ToDoList/AddTask",
-            method: "POST",
-            data: { taskName: state.values.taskName },
-        });
-
-        promise.then((result) => {
-            getTaskList();
-
-            alert("successful add task");
-        });
-
-        promise.catch((err) => {
-            console.log("Fail to add task");
-            alert(err.response.data);
-        });
+        dispatch(addTaskAction(state.values.taskName));
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    };
+
+    useEffect(() => {
+        getTaskList();
+        return () => {};
+    }, []);
+
     return (
-        <form onSubmit={() => {}}>
-            <div className="card">
-                <div className="card__header">
-                    <img src="./img/X2oObC4.png" alt="background pic" />
-                </div>
-                {/* <h2>hello!</h2> */}
-                <div className="card__body">
-                    <div className="card__content">
-                        <div className="card__title">
-                            <h2>My Tasks</h2>
-                            <p>May 29,2021</p>
-                        </div>
-                        <div className="card__add">
-                            <input
-                                onChange={handleChange}
-                                id="newTask"
-                                type="text"
-                                placeholder="Enter an activity..."
-                            />
-                            <button id="addItem" onClick={addTask}>
-                                <i className="fa fa-plus" />
-                            </button>
-                        </div>
-                        <div className="card__todo">
-                            {/* Uncompleted tasks */}
-                            <ul className="todo" id="todo">
-                                {renderTaskTodo()}
-                            </ul>
-                            {/* Completed tasks */}
-                            <ul className="todo" id="completed">
-                                {renderTaskCompleted()}
-                            </ul>
-                        </div>
+        <div className="card">
+            <div className="card__header">
+                <img src="./img/X2oObC4.png" alt="background pic" />
+            </div>
+            {/* <h2>hello!</h2> */}
+            <form className="card__body" onSubmit={handleSubmit}>
+                <div className="card__content">
+                    <div className="card__title">
+                        <h2>My Tasks</h2>
+                        <p>May 29,2021</p>
+                    </div>
+                    <div className="card__add">
+                        <input
+                            onChange={handleChange}
+                            name="taskName"
+                            id="newTask"
+                            type="text"
+                            placeholder="Enter an activity..."
+                        />
+                        <button id="addItem" type="submit" onClick={addTask}>
+                            <i className="fa fa-plus" />
+                        </button>
+                    </div>
+                    <div className="card__todo">
+                        {/* Uncompleted tasks */}
+                        <ul className="todo" id="todo">
+                            {renderTaskTodo()}
+                        </ul>
+                        {/* Completed tasks */}
+                        <ul className="todo" id="completed">
+                            {renderTaskCompleted()}
+                        </ul>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     );
 }
