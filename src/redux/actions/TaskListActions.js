@@ -6,101 +6,90 @@ import { GET_TASK_API } from "../constant/TaskListContant";
 // Async action: Go through middleware before calling action 1 to perform
 
 export const getTaskApiAction = () => {
-    return (dispatch) => {
-        const promise = Axios({
-            url: "http://svcy.myclass.vn/api/ToDoList/GetAllTask",
-            method: "GET",
-        });
-
-        promise.then((result) => {
-            console.log(result.data);
-            // if successful calling API, set state
-            dispatch({
-                type: GET_TASK_API,
-                taskList: result.data,
+    return async (dispatch) => {
+        try {
+            const { data, status, ...res } = await Axios({
+                url: "http://svcy.myclass.vn/api/ToDoList/GetAllTask",
+                method: "GET",
             });
 
-            console.log("successful");
-        });
-
-        promise.catch((err) => {
-            console.log("Fail");
-            console.log(err.response.data);
-        });
+            if (status === 200) {
+                dispatch({
+                    type: GET_TASK_API,
+                    taskList: data,
+                });
+            }
+        } catch (err) {
+            alert(err.response.data);
+        }
     };
 };
 
 export const addTaskAction = (taskName) => {
-    return (dispatch) => {
-        const promise = Axios({
-            url: "http://svcy.myclass.vn/api/ToDoList/AddTask",
-            method: "POST",
-            data: { taskName: taskName },
-        });
+    return async (dispatch) => {
+        try {
+            const { data, status, ...res } = await Axios({
+                url: "http://svcy.myclass.vn/api/ToDoList/AddTask",
+                method: "POST",
+                data: { taskName: taskName },
+            });
 
-        promise.then((result) => {
-            dispatch(getTaskApiAction());
-
-            alert("successful add task");
-        });
-
-        promise.catch((err) => {
-            console.log("Fail to add task");
+            if (status === 200) {
+                dispatch(getTaskApiAction());
+            }
+        } catch (err) {
             alert(err.response.data);
-        });
+        }
     };
 };
 
 export const delTaskAction = (taskName) => {
-    return (dispatch) => {
-        const promise = Axios({
-            url: `http://svcy.myclass.vn/api/ToDoList/deleteTask?taskName=${taskName}`,
-            method: "DELETE",
-        });
+    return async (dispatch) => {
+        try {
+            const { data, status, ...res } = await Axios({
+                url: `http://svcy.myclass.vn/api/ToDoList/deleteTask?taskName=${taskName}`,
+                method: "DELETE",
+            });
 
-        promise.then((result) => {
-            alert(result.data);
-            dispatch(getTaskApiAction());
-        });
-
-        promise.catch((error) => {
-            alert(error.response.data);
-        });
+            if (status === 200) {
+                dispatch(getTaskApiAction());
+            }
+        } catch (err) {
+            alert(err.response.data);
+        }
     };
 };
 
 export const rejectTaskAction = (taskName) => {
-    return (dispatch) => {
-        const promise = Axios({
-            url: `http://svcy.myclass.vn/api/ToDoList/rejectTask?taskName=${taskName}`,
-            method: "PUT",
-        });
+    return async (dispatch) => {
+        try {
+            const { data, status, ...res } = await Axios({
+                url: `http://svcy.myclass.vn/api/ToDoList/rejectTask?taskName=${taskName}`,
+                method: "PUT",
+            });
 
-        promise.then((result) => {
-            alert(result.data);
-            dispatch(getTaskApiAction());
-        });
-
-        promise.catch((error) => {
-            alert(error.response.data);
-        });
+            if (status === 200) {
+                dispatch(getTaskApiAction());
+            }
+        } catch (err) {
+            alert(err.response.data);
+        }
     };
 };
 
 export const completeTaskAction = (taskName) => {
-    return (dispatch) => {
-        const promise = Axios({
-            url: `http://svcy.myclass.vn/api/ToDoList/doneTask?taskName=${taskName}`,
-            method: "PUT",
-        });
+    return async (dispatch) => {
+        try {
+            const { data, status, ...res } = await Axios({
+                url: `http://svcy.myclass.vn/api/ToDoList/doneTask?taskName=${taskName}`,
+                method: "PUT",
+            });
 
-        promise.then((result) => {
-            alert(result.data);
-            dispatch(getTaskApiAction());
-        });
-
-        promise.catch((error) => {
-            alert(error.response.data);
-        });
+            if (status === 200) {
+                dispatch(getTaskApiAction());
+            }
+        } catch (err) {
+            alert(err.response.data);
+        }
     };
 };
