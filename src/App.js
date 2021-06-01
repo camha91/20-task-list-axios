@@ -1,6 +1,9 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Header from "./components/Home/Header/Header";
+import TaskListRcc from "./components/TaskList/TaskListRcc";
+import TaskListRedux from "./components/TaskList/TaskListRedux";
+import TaskListRfc from "./components/TaskList/TaskListRfc";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
 import Detail from "./pages/Detail/Detail";
@@ -20,6 +23,9 @@ function App() {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/detail/:id" component={Detail} />
                 <Route exact path="/profile" component={Profile} />
+                <Route exact path="/taskListRcc" component={TaskListRcc} />
+                <Route exact path="/taskListRfc" component={TaskListRfc} />
+                <Route exact path="/taskListRedux" component={TaskListRedux} />
                 <Route exact path="/" component={Home} />
                 <Route path="*" component={PageNotFound} />
             </Switch>
