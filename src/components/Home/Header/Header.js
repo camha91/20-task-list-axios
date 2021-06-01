@@ -97,6 +97,12 @@ export default function Header() {
                                 >
                                     Task List Functional
                                 </NavLink>
+                                <NavLink
+                                    className="dropdown-item"
+                                    to="/taskListRedux"
+                                >
+                                    Task List Redux
+                                </NavLink>
                             </div>
                         </li>
                     </ul>

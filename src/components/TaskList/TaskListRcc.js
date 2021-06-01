@@ -13,26 +13,6 @@ export default class TaskListRcc extends Component {
         },
     };
 
-    getTaskList = () => {
-        const promise = Axios({
-            url: "http://svcy.myclass.vn/api/ToDoList/GetAllTask",
-            method: "GET",
-        });
-
-        promise.then((result) => {
-            console.log(result.data);
-            // if successful calling API, set state
-            this.setState({ taskList: result.data });
-
-            console.log("successful get all task");
-        });
-
-        promise.catch((err) => {
-            console.log("Fail to get all task");
-            console.log(err.response.data);
-        });
-    };
-
     renderTaskTodo = () => {
         return this.state.taskList
             .filter((item) => !item.status)
@@ -99,6 +79,48 @@ export default class TaskListRcc extends Component {
             });
     };
 
+    handleChange = (e) => {
+        const { value, name } = e.target;
+        console.log(value, name);
+        const newValues = { ...this.state.values, [name]: value };
+
+        const regexString = /^[a-z A-Z]+$/;
+
+        let newErrors = { ...this.state.errors };
+
+        if (!regexString.test(value) || value.trim() === "") {
+            newErrors[name] = name + " invalid!";
+        } else {
+            newErrors = "";
+        }
+
+        this.setState({
+            ...this.state,
+            values: newValues,
+            errors: newErrors,
+        });
+    };
+
+    getTaskList = () => {
+        const promise = Axios({
+            url: "http://svcy.myclass.vn/api/ToDoList/GetAllTask",
+            method: "GET",
+        });
+
+        promise.then((result) => {
+            console.log(result.data);
+            // if successful calling API, set state
+            this.setState({ taskList: result.data });
+
+            console.log("successful get all task");
+        });
+
+        promise.catch((err) => {
+            console.log("Fail to get all task");
+            console.log(err.response.data);
+        });
+    };
+
     // Complete a task
     completeTask = (taskName) => {
         const promise = Axios({
@@ -150,10 +172,6 @@ export default class TaskListRcc extends Component {
         });
     };
 
-    componentDidMount = () => {
-        this.getTaskList();
-    };
-
     // Add a task
     addTask = (e) => {
         e.preventDefault();
@@ -178,26 +196,8 @@ export default class TaskListRcc extends Component {
         });
     };
 
-    handleChange = (e) => {
-        const { value, name } = e.target;
-        console.log(value, name);
-        const newValues = { ...this.state.values, [name]: value };
-
-        const regexString = /^[a-z A-Z]+$/;
-
-        let newErrors = { ...this.state.errors };
-
-        if (!regexString.test(value) || value.trim() === "") {
-            newErrors[name] = name + " invalid!";
-        } else {
-            newErrors = "";
-        }
-
-        this.setState({
-            ...this.state,
-            values: newValues,
-            errors: newErrors,
-        });
+    componentDidMount = () => {
+        this.getTaskList();
     };
 
     render() {

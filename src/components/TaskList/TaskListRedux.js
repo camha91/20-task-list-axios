@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
-import "./TaskList.css";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { getTaskApiAction } from "../../redux/actions/TaskListActions";
 
-export default function TaskListRfc(props) {
+export default function TaskListRedux(props) {
+    const taskList = useSelector((state) => state.TaskListReducer.taskList);
+    console.log(taskList);
+
     const [state, setState] = useState({
-        taskList: [],
         values: {
             taskName: "",
         },
@@ -13,29 +16,20 @@ export default function TaskListRfc(props) {
         },
     });
 
+    const dispatch = useDispatch();
+
     const getTaskList = () => {
-        const promise = Axios({
-            url: "http://svcy.myclass.vn/api/ToDoList/GetAllTask",
-            method: "GET",
-        });
-
-        promise.then((result) => {
-            console.log(result.data);
-            // if successful calling API, set state
-            setState({ taskList: result.data });
-
-            console.log("successful");
-        });
-
-        promise.catch((err) => {
-            console.log("Fail");
-            console.log(err.response.data);
-        });
+        dispatch(getTaskApiAction());
     };
 
+    useEffect(() => {
+        getTaskList();
+        return () => {};
+    }, []);
+
     const renderTaskTodo = () => {
-        console.log(state.taskList);
-        return state.taskList
+        return taskList
+
             .filter((item) => !item.status)
             .map((item, index) => {
                 return (
@@ -68,7 +62,7 @@ export default function TaskListRfc(props) {
     };
 
     const renderTaskCompleted = () => {
-        return state.taskList
+        return taskList
             .filter((item) => item.status)
             .map((item, index) => {
                 return (
@@ -196,17 +190,8 @@ export default function TaskListRfc(props) {
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    };
-
-    useEffect(() => {
-        getTaskList();
-        return () => {};
-    }, []);
-
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={() => {}}>
             <div className="card">
                 <div className="card__header">
                     <img src="./img/X2oObC4.png" alt="background pic" />
@@ -218,22 +203,17 @@ export default function TaskListRfc(props) {
                             <h2>My Tasks</h2>
                             <p>May 29,2021</p>
                         </div>
-                        <div className="form-group">
-                            <div className="card__add">
-                                <input
-                                    onChange={handleChange}
-                                    name="taskName"
-                                    id="newTask"
-                                    type="text"
-                                    placeholder="Enter an activity..."
-                                />
-                                <button id="addItem" onClick={addTask}>
-                                    <i className="fa fa-plus" />
-                                </button>
-                            </div>
-                            {/* <p>{state.errors.taskName}</p> */}
+                        <div className="card__add">
+                            <input
+                                onChange={handleChange}
+                                id="newTask"
+                                type="text"
+                                placeholder="Enter an activity..."
+                            />
+                            <button id="addItem" onClick={addTask}>
+                                <i className="fa fa-plus" />
+                            </button>
                         </div>
-
                         <div className="card__todo">
                             {/* Uncompleted tasks */}
                             <ul className="todo" id="todo">
