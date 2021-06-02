@@ -109,7 +109,12 @@ export default function TaskListSaga(props) {
         });
     };
 
-    const getTaskList = () => {};
+    const getTaskList = () => {
+        // dispatch action saga
+        dispatch({
+            type: "getTaskApiAction",
+        });
+    };
 
     // Complete a task
     const completeTask = (taskName) => {};
@@ -128,6 +133,8 @@ export default function TaskListSaga(props) {
     };
 
     useEffect(() => {
+        getTaskList();
+
         return () => {};
     }, []);
 
