@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import LoadingComponent from "./components/GlobalSetting/LoadingComponent/LoadingComponent";
 import Header from "./components/Home/Header/Header";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
@@ -17,6 +18,7 @@ function App() {
     return (
         <BrowserRouter>
             <Header />
+            <LoadingComponent />
             <Switch>
                 <Route exact path="/home" component={Home} />
                 <Route exact path="/contact" component={Contact} />

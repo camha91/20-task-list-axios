@@ -1,6 +1,7 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import TaskListReducer from "./reducers/TaskListReducer";
 import reduxThunk from "redux-thunk";
+import LoadingReducer from "./reducers/LoadingReducer";
 
 // middleWareSaga
 import createMiddlewareSaga from "redux-saga";
@@ -10,6 +11,7 @@ const middlewareSaga = createMiddlewareSaga();
 
 const rootReducer = combineReducers({
     TaskListReducer,
+    LoadingReducer,
 });
 
 const store = createStore(
