@@ -70,6 +70,7 @@ export default function Header() {
                                 Profile
                             </NavLink>
                         </li>
+
                         <li className="nav-item dropdown">
                             <a
                                 className="nav-link dropdown-toggle"
@@ -102,6 +103,12 @@ export default function Header() {
                                     to="/taskListRedux"
                                 >
                                     Task List Redux
+                                </NavLink>
+                                <NavLink
+                                    className="dropdown-item"
+                                    to="/taskListSaga"
+                                >
+                                    Task List Saga
                                 </NavLink>
                             </div>
                         </li>
