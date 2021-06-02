@@ -1,13 +1,14 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./TaskList.css";
 
 export default function TaskListSaga(props) {
     const dispatch = useDispatch();
 
+    const taskList = useSelector((state) => state.TaskListReducer.taskList);
+
     const [state, setState] = useState({
-        taskList: [],
         values: {
             taskName: "",
         },
@@ -17,8 +18,8 @@ export default function TaskListSaga(props) {
     });
 
     const renderTaskTodo = () => {
-        console.log("Rfc taskList: ", state.taskList);
-        return state.taskList
+        console.log("Saga taskList: ", taskList);
+        return taskList
             .filter((item) => !item.status)
             .map((item, index) => {
                 return (
@@ -51,7 +52,7 @@ export default function TaskListSaga(props) {
     };
 
     const renderTaskCompleted = () => {
-        return state.taskList
+        return taskList
             .filter((item) => item.status)
             .map((item, index) => {
                 return (
