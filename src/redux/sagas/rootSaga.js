@@ -8,5 +8,6 @@ export function* rootSaga() {
     yield all([
         // Follow all action saga taskList
         SagaTaskList.followActionGetTaskApi(),
+        SagaTaskList.followActionAddTaskApi(),
     ]);
 }

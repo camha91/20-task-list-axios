@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {
+    ADD_TASK_SAGA_API,
+    GET_TASK_SAGA_API,
+} from "../../redux/constant/TaskListContant";
 import "./TaskList.css";
 
 export default function TaskListSaga(props) {
@@ -111,7 +115,7 @@ export default function TaskListSaga(props) {
     const getTaskList = () => {
         // dispatch action saga
         dispatch({
-            type: "getTaskApiAction",
+            type: GET_TASK_SAGA_API,
         });
     };
 
@@ -125,7 +129,14 @@ export default function TaskListSaga(props) {
     const delTask = (taskName) => {};
 
     // Add a task
-    const addTask = (e) => {};
+    const addTask = (e) => {
+        e.preventDefault();
+
+        dispatch({
+            type: ADD_TASK_SAGA_API,
+            taskName: state.values.taskName,
+        });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();

@@ -10,6 +10,14 @@ export class TaskListService {
             method: "GET",
         });
     };
+
+    addTaskApi = (taskName) => {
+        return Axios({
+            url: `${DOMAIN}/ToDoList/AddTask`,
+            method: "POST",
+            data: { taskName: taskName },
+        });
+    };
 }
 
 export const taskListService = new TaskListService();

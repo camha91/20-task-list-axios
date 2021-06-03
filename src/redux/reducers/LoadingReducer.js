@@ -1,15 +1,17 @@
+import { DISPLAY_LOADING, HIDE_LOADING } from "../constant/LoadingConstant";
+
 const initialState = {
     isLoading: false,
 };
 
 const LoadingReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "DISPLAY_LOADING": {
+        case DISPLAY_LOADING: {
             state.isLoading = true;
             return { ...state };
         }
 
-        case "HIDE_LOADING": {
+        case HIDE_LOADING: {
             state.isLoading = false;
             return { ...state };
         }
