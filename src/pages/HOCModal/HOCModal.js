@@ -1,9 +1,12 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import SlideDown from "../../HOC/Modal/SlideDown";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
 
 export default function HOCModal() {
+    const LoginWithSlideDown = new SlideDown(Login);
+
     const dispatch = useDispatch();
 
     return (
@@ -38,6 +41,8 @@ export default function HOCModal() {
             >
                 Register
             </button>
+
+            {LoginWithSlideDown}
         </div>
     );
 }
