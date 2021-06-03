@@ -2,9 +2,11 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LoadingComponent from "./components/GlobalSetting/LoadingComponent/LoadingComponent";
 import Header from "./components/Home/Header/Header";
+import Modal from "./HOC/Modal/Modal";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
 import Detail from "./pages/Detail/Detail";
+import HOCModal from "./pages/HOCModal/HOCModal";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
@@ -18,6 +20,7 @@ function App() {
     return (
         <BrowserRouter>
             <Header />
+            <Modal />
             <LoadingComponent />
             <Switch>
                 <Route exact path="/home" component={Home} />
@@ -26,6 +29,7 @@ function App() {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/detail/:id" component={Detail} />
                 <Route exact path="/profile" component={Profile} />
+                <Route exact path="/hocModal" component={HOCModal} />
                 <Route exact path="/taskListSaga" component={TaskListSaga} />
                 <Route exact path="/taskListRcc" component={TaskListRcc} />
                 <Route exact path="/taskListRfc" component={TaskListRfc} />
