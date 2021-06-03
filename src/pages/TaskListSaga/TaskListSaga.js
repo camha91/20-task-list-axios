@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     ADD_TASK_SAGA_API,
+    COMPLETE_TASK_SAGA_API,
+    DELETE_TASK_SAGA_API,
     GET_TASK_SAGA_API,
+    REJECT_TASK_SAGA_API,
 } from "../../redux/constant/TaskListContant";
 import "./TaskList.css";
 
@@ -120,13 +123,28 @@ export default function TaskListSaga(props) {
     };
 
     // Complete a task
-    const completeTask = (taskName) => {};
+    const completeTask = (taskName) => {
+        dispatch({
+            type: COMPLETE_TASK_SAGA_API,
+            taskName,
+        });
+    };
 
     // Reject a task
-    const rejectTask = (taskName) => {};
+    const rejectTask = (taskName) => {
+        dispatch({
+            type: REJECT_TASK_SAGA_API,
+            taskName,
+        });
+    };
 
     // Delete a task
-    const delTask = (taskName) => {};
+    const delTask = (taskName) => {
+        dispatch({
+            type: DELETE_TASK_SAGA_API,
+            taskName,
+        });
+    };
 
     // Add a task
     const addTask = (e) => {

@@ -9,5 +9,8 @@ export function* rootSaga() {
         // Follow all action saga taskList
         SagaTaskList.followActionGetTaskApi(),
         SagaTaskList.followActionAddTaskApi(),
+        SagaTaskList.followActionCompleteTaskApi(),
+        SagaTaskList.followActionRejectTaskApi(),
+        SagaTaskList.followActionDeleteTaskApi(),
     ]);
 }

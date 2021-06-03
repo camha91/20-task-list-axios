@@ -18,6 +18,25 @@ export class TaskListService {
             data: { taskName: taskName },
         });
     };
+
+    completeTaskApi = (taskName) => {
+        return Axios({
+            url: `${DOMAIN}/ToDoList/doneTask?taskName=${taskName}`,
+            method: "PUT",
+        });
+    };
+    rejectTaskApi = (taskName) => {
+        return Axios({
+            url: `${DOMAIN}/ToDoList/rejectTask?taskName=${taskName}`,
+            method: "PUT",
+        });
+    };
+    deleteTaskApi = (taskName) => {
+        return Axios({
+            url: `${DOMAIN}/ToDoList/deleteTask?taskName=${taskName}`,
+            method: "DELETE",
+        });
+    };
 }
 
 export const taskListService = new TaskListService();
