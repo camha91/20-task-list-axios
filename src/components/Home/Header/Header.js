@@ -70,6 +70,16 @@ export default function Header() {
                                 Profile
                             </NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink
+                                activeClassName="activeNavItem"
+                                activeStyle={{ fontWeight: "bold" }}
+                                className="nav-link"
+                                to="/hocModal"
+                            >
+                                HOC Modal
+                            </NavLink>
+                        </li>
 
                         <li className="nav-item dropdown">
                             <a
